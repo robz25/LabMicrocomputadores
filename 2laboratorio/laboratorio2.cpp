@@ -1,204 +1,121 @@
-// laboratorio2 - Robin Gonzalez
+// laboratorio2 - Robin Gonzalez Ricz
 //g++ 9.3.0 corriendo en ubuntu 20.04
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <string>
-#include <list>
-//#include <sstream>
-#include <math.h>
-using namespace std;
+#include <iostream> //leer datos de terminal
+#include <string> //usar strings
+#include <math.h> //usar operaciones matematicas como raiz y cuadrado
+using namespace std; //abreviar escritura
 
-int cantidad = 0;
-int contador = 0;
-//float punto;
-string texto = "";
-string separador = ",";
-bool puntoValido = false;
-bool invalido = true;
-float dmin,dmax;
-list<int> puntosmin;
-list<int> puntosmax;
+//variables globales
+int cantidad = 0; //cantidad de puntos
+int contador = 0; //contador de puntos ingresados
+string texto = ""; //texto leido de terminal
+string separador = ","; //separador de numeros
+bool puntoValido = false; //indica si el punto es valido
+bool invalido = true; //indica so el paro es invalido
+float dmin,dmax; //valores maximos y minimos
 
+//funcion que calcula distancia entre puntos
 float distanciaPuntos(float x[],float y[], int punto1, int punto2){
   float temp = pow(x[punto2]-x[punto1],2) + pow(y[punto2]-y[punto1],2);
   return sqrt(temp);
 }
 
+
 int main(){
 
     while (invalido){
       cout << "\nIngrese la cantidad de puntos: ";
-      getline(cin, texto);
+      getline(cin, texto); //leemos string
       try{
-        cantidad = stoi(texto);
-      //cin >> cantidad;
-      if(cantidad < 2){
+        cantidad = stoi(texto); //convertimos a entero
+
+      if(cantidad < 2){ //si es menor a 2 no es valido
         cout << "ERROR. La cantidad no puede ser menor a 2" << endl;
         invalido = true;
         }
       else{
-          invalido = false;
+          invalido = false; // indica que hay que terminar lectura
         }
       }
-      catch ( ... ) {
-
+      catch ( ... ) {//si no se convierte a entero hay error
         cout << "ERROR. Intente nuevamente con una cantidad valida" << endl;
         texto = "";
       }
+    }
 
-      //cout << "\nIntente nuevamente con una cantidad valida " << endl;
-      //cout << "\nIngrese la cantidad de puntos: ";
-      //cin >> cantidad;
-      }
+  float x[cantidad],y[cantidad]; //arreglos para guardar los puntos
 
-  //cout << "\nIngresado: " << cantidad << "\n" << endl;
-  float x[cantidad],y[cantidad];
-
-  //cout << "Cantidad ingresada: " << puntos << "\n"  ;
-  //getline(cin, texto);
-
-  while(cantidad > contador){
+  while(cantidad > contador){// leer puntos mientras no se acaben
     cout << "\nDigite un par ordenado de la forma x,y: " << endl;
 
-  //  while (texto.length() < 2){
-      getline(cin, texto);
-//    }
-    //cout << "texto: " << texto << endl;
-    //if(texto 1=){
+
+      getline(cin, texto); //leer string
+
       size_t posicion = 0;
       string token;
-      int XoY = 0;
-      puntoValido = false;
+
+      puntoValido = false;//indicar punto no valido aun
 
       while ((posicion = texto.find(separador)) != string::npos && texto != "") {
 
-        token = texto.substr(0, posicion);
-        //cout << token <<  endl;
+        token = texto.substr(0, posicion);//obtener string antes del separador
 
         puntoValido = true;
         try {
-          x[contador] = stof(token);
-      /*    if(XoY = 0){
-            cout << "Asigno X: "  << endl;
-            X[contador] = stof(token);
-            //XoY = 1;
-          }
-          if(XoY = 1){
-            cout << "Asigno Y: " << endl;
-            y[contador] = stof(token);
-            //XoY = 0;
-          }
-          XoY++;*/
+          x[contador] = stof(token);//convertir primer numero a float
+
           texto.erase(0, posicion + separador.length());
-          y[contador] = stof(texto);
+          y[contador] = stof(texto);//convertir segundo numero a float
 
           contador+=1;
           //cout <<"Punto aceptado correctamente"<<  endl;
         }
 
-        catch ( ... ) {
-          if(contador > 0)--contador;
+        catch ( ... ) {//si hubo error al convertir
+          if(contador > 0)--contador;//si no es primer numero decrementar
           cout << "ERROR: los valores ingresados no son numeros validos, reintentar" << endl;
           texto = "";
         }
 
-        //  cout << token << endl;
-
       }
+      //si hay algun otro error en el punto ingresado diferente de que no sean numeros
       if(!puntoValido)cout << "ERROR: el punto ingresado no es valido, reintentar" << endl;
-
-  //  cout << texto << endl;
-
-    //cout << "\nIngresado: " << cantidad << "\n";
-/*    cout << "\nIterando: " << contador << endl;
-
-    //string entrada  = texto;
-//    string bla(texto);
-    stringstream s_stream(texto);
-    vector<string> tokens;//???
-    while(s_stream.good()){
-
-      string substr;
-      getline(s_stream, substr, ',');
-      tokens.push_back(substr);
-}
-      for(int i = 0; i < tokens.size(); i++){
-
-        stringstream numeros(tokens.at(i));
-        if ( i == 0)numeros >> x[contador];
-        if ( i == 1)numeros >> y[contador];
-        if( 0 == x[contador] || y[contador] == 0){
-          cout << "Error, el par ordenado no contiene numeros validos" << endl;
-          --contador;
-        }
-
-        cout << "\n  Tokens " << i << ": " << tokens.at(i) << endl;
-}
-cout << "\n " << x[contador] << endl;
-cout << "\n " << y[contador] << endl;
-*/
-
-    /*for (string numero; getline(split, numero, ','); tokens.push_back(numero)){
-    cout << "resultante" << numero ;
-
-   // now use `tokens`
-}*/
-
-
-/*
-    cout << "String: " << texto;
-
-    cin >> punto;
-  //  cout << punto << "\n";
-    //getline(cin,punto);
-    x[contador] = int(punto);
-    punto = punto - int(punto);
-    while(punto- int(punto) != 0){
-      punto *= 10;
     }
-    y[contador] = int(punto);
 
-    cout << x[contador] << "\n";
-    cout << y[contador] << "\n";
-    */
-
-      //  }
-      }
-    //x[0] = 999;
-    //y[0] = 666;
-    cout << "\n Puntos recibidos: " << endl;
-    //cout << "___________________" << endl;
-    for(int c = 0; c < cantidad;c++)
-    cout << c << ": " << x[c] <<  "," << y[c] << endl;
+    cout << "\n==>>> Puntos recibidos: " << endl;
+    for(int c = 0; c < cantidad;c++)//imprimir puntos ingresados
+      cout << "Punto " << c << ": " << x[c] <<  "," << y[c] << endl;
     cout << endl;
-    dmin = distanciaPuntos( x, y, 0,1 );
+
+    dmin = distanciaPuntos( x, y, 0,1 );//obtener primer valor como referencia
     dmax = dmin;
-    int cantidadDistancias = cantidad*(cantidad-1)/2;
+    int cantidadDistancias = cantidad*(cantidad-1)/2;//distancias a calcular
     int iteradorTabla = 0;
 
-    float tablaDistanciasPuntos[3][cantidadDistancias-1];
+    float tablaDistanciasPuntos[3][cantidadDistancias];//tabla para guardar distancias
+    //en primer fila, puntos en segunda y tercera
     float dist;
 
-    for(int cantPuntos = 0; cantPuntos < cantidad; cantPuntos++){
+    for(int cantPuntos = 0; cantPuntos < cantidad; cantPuntos++){//calcular distancias
 
       for(int otrosPuntos = cantPuntos;otrosPuntos<cantidad-1;otrosPuntos++){
 
-          dist = distanciaPuntos( x, y, cantPuntos,otrosPuntos+1);
-          cout << "distancia : " << dist<< endl;
+          dist = distanciaPuntos( x, y, cantPuntos,otrosPuntos+1);//calcualr distancais
+          //le pasamos los arreglos y las entradas a usar (numero de puntos)
 
-          cout << cantPuntos << " con: " << otrosPuntos+1<< endl;
+          //si se desea ver la distancia de cada par de puntos
+          //cout << "distancia : " << dist<< endl;
+          //cout << cantPuntos << " con: " << otrosPuntos+1<< endl;
 
+          //actualizar valores maximos y minimos
           if (dist <= dmin){
             dmin = dist;
-            //puntosmin
           }
-
           if (dist >= dmax){
             dmax = dist;
-            //puntosmax
           }
 
+          ///llenar tabla con distancias y puntos respectivos
           tablaDistanciasPuntos[0][iteradorTabla] = dist;
           tablaDistanciasPuntos[1][iteradorTabla] = cantPuntos;
           tablaDistanciasPuntos[2][iteradorTabla] = otrosPuntos+1;
@@ -207,12 +124,13 @@ cout << "\n " << y[contador] << endl;
         }
     }
 
-    if(cantidad == 2){
+    if(cantidad == 2){//si solo hay dos puntos
       cout << "Distancia entre los dos puntos: " << dist<< endl;
 
     }
-    else{
+    else{//si hay mas de dos puntos ingresados
 
+      //recorrer la tabla y al encontrar la dist max, imprimir los puntos
     cout << "\ndistancia Maxima: " << dmax<< " Se da entre los puntos:"<<  endl;
 
     for(int i = 0; i < cantidadDistancias; i++){
@@ -221,6 +139,7 @@ cout << "\n " << y[contador] << endl;
         }
       }
 
+      //recorrer la tabla y al encontrar la dist min, imprimir los puntos
     cout << "\ndistancia Minima: " << dmin<< " Se da entre los puntos:"<<  endl;
 
     for(int i = 0; i < cantidadDistancias; i++){
@@ -231,8 +150,10 @@ cout << "\n " << y[contador] << endl;
 
     }
 
-cout << "\ntabla\n" << endl;
 
+//si se desea ver la tabla
+/*
+cout << "\ntabla\n" << endl;
 for(int f = 0;f <3;f++){
     for(int c = 0;c <cantidadDistancias;c++){
 
@@ -241,5 +162,6 @@ for(int f = 0;f <3;f++){
     }
     cout << endl;
     }
+    */
 
 }
