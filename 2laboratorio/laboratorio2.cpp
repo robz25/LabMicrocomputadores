@@ -1,5 +1,6 @@
 // laboratorio2 - Robin Gonzalez Ricz
 //g++ 9.3.0 corriendo en ubuntu 20.04
+
 #include <iostream> //leer datos de terminal
 #include <string> //usar strings
 #include <math.h> //usar operaciones matematicas como raiz y cuadrado
